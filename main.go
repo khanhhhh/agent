@@ -35,14 +35,16 @@ func main() {
 
 	m := model.NewModel(action, transition)
 	p := model.NewPolicy()
-	var state model.State = 0
+	var currentState model.State = 0
+	var nextState model.State
 	for i := 0; i < 100000; i++ {
-		fmt.Printf("iter: %v, state: %v\n", i, state)
-		p = p.Iterate(m, state, 0.99999)
-		state = model.State((int(state) + 1) % len(rewardArr))
+		fmt.Printf("iter: %v, state: %v\n", i, currentState)
+		p, nextState = p.Iterate(m, currentState, 0.9999999)
+		currentState = nextState
 	}
 
-	state = 0
+	// Optimal Policy
+	var state model.State = 0
 	fmt.Println("Initial State:", state)
 	for i := 0; i < 10; i++ {
 		action := p.OptimalAction(state)
