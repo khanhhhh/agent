@@ -28,12 +28,13 @@ func main() {
 
 	p := model.NewPolicy()
 	var currentState model.State = 0
-	var nextState model.State
 	for i := 0; i < 1000; i++ {
 		action := model.Action(rand.Intn(3) - 1)
+		chosenActions := map[model.Action]struct{}{
+			action: struct{}{},
+		}
 		fmt.Printf("iter: %v, state: %v, action %v\n", i, currentState, action)
-		p, nextState = p.Iterate(transition, currentState, map[model.Action]struct{}{action: struct{}{}}, 0.99)
-		currentState = nextState
+		p, currentState = p.Iterate(transition, currentState, chosenActions, 0.99)
 	}
 
 	// Optimal Policy
