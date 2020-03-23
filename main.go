@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"model"
 )
 
@@ -22,23 +23,16 @@ var transition = func(current model.State, action model.Action) (model.State, mo
 	return next, valueArr[next] - valueArr[current]
 }
 
-var action = func(model.State) map[model.Action]struct{} {
-	return map[model.Action]struct{}{
-		-1: struct{}{},
-		0:  struct{}{},
-		+1: struct{}{},
-	}
-}
-
 func main() {
 	fmt.Println("Hello, World!")
 
 	p := model.NewPolicy()
 	var currentState model.State = 0
 	var nextState model.State
-	for i := 0; i < 100000; i++ {
-		fmt.Printf("iter: %v, state: %v\n", i, currentState)
-		p, nextState = p.Iterate(transition, currentState, action(currentState), 0.99)
+	for i := 0; i < 1000; i++ {
+		action := model.Action(rand.Intn(3) - 1)
+		fmt.Printf("iter: %v, state: %v, action %v\n", i, currentState, action)
+		p, nextState = p.Iterate(transition, currentState, map[model.Action]struct{}{action: struct{}{}}, 0.99)
 		currentState = nextState
 	}
 
