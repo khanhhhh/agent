@@ -29,11 +29,10 @@ func main() {
 	p := model.NewPolicy()
 	var currentState model.State = 0
 	for i := 0; i < 1000; i++ {
-		action := model.Action(rand.Intn(3) - 1)
+		action1 := model.Action(rand.Intn(3) - 1)
 		chosenActions := map[model.Action]struct{}{
-			action: struct{}{},
+			action1: struct{}{},
 		}
-		fmt.Printf("iter: %v, state: %v, action %v\n", i, currentState, action)
 		p, currentState = p.Iterate(transition, currentState, chosenActions, 0.99)
 	}
 
