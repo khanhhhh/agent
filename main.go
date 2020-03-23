@@ -5,21 +5,21 @@ import (
 	"model"
 )
 
-var rewardArr = [10]float64{3, 3, 3, 2, 0, 1, 4, 7, 8, 3}
+var valueArr = [10]float64{3, 3, 3, 2, 0, 1, 4, 7, 8, 3}
 
 var actionArr = [3]int{-1, 0, +1}
 
-var transition = func(state model.State, action model.Action) (model.State, model.Reward) {
-	next := model.State(int(state) + int(action))
+var transition = func(current model.State, action model.Action) (model.State, model.Reward) {
+	next := model.State(int(current) + int(action))
 	if int(next) < 0 {
 		next = 0
 		return next, 0
 	}
-	if int(next) >= len(rewardArr) {
-		next = model.State(len(rewardArr) - 1)
+	if int(next) >= len(valueArr) {
+		next = model.State(len(valueArr) - 1)
 		return next, 0
 	}
-	return next, rewardArr[next] - rewardArr[state]
+	return next, valueArr[next] - valueArr[current]
 }
 
 var action = func(model.State) map[model.Action]struct{} {
@@ -39,7 +39,7 @@ func main() {
 	var nextState model.State
 	for i := 0; i < 100000; i++ {
 		fmt.Printf("iter: %v, state: %v\n", i, currentState)
-		p, nextState = p.Iterate(m, currentState, 0.9999999)
+		p, nextState = p.Iterate(m, currentState, 0.99)
 		currentState = nextState
 	}
 
