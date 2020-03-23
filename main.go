@@ -33,13 +33,12 @@ var action = func(model.State) map[model.Action]struct{} {
 func main() {
 	fmt.Println("Hello, World!")
 
-	m := model.NewModel(action, transition)
 	p := model.NewPolicy()
 	var currentState model.State = 0
 	var nextState model.State
 	for i := 0; i < 100000; i++ {
 		fmt.Printf("iter: %v, state: %v\n", i, currentState)
-		p, nextState = p.Iterate(m, currentState, 0.99)
+		p, nextState = p.Iterate(transition, currentState, action(currentState), 0.99)
 		currentState = nextState
 	}
 

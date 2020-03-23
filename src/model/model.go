@@ -9,8 +9,13 @@ type Action int
 // Reward :
 type Reward = float64
 
-// Model :
-type Model struct {
-	action     func(State) map[Action]struct{}     // stocahstic
-	transition func(State, Action) (State, Reward) // stochastic
+// Quality :
+type Quality = float64
+
+// Probability :
+type Probability = float64
+
+// Policy :
+type Policy struct {
+	mapping map[State]map[Action]Quality
 }

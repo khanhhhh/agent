@@ -5,9 +5,6 @@ import (
 	"math/rand"
 )
 
-// Probability :
-type Probability = float64
-
 func softmax(mapIn map[Action]Quality) (mapOut map[Action]Probability) {
 	mapOut = make(map[Action]Probability)
 	var sum float64 = 0
