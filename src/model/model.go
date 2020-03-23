@@ -11,6 +11,6 @@ type Reward = float64
 
 // Model :
 type Model struct {
-	action     func(State) map[Action]struct{}     // deterministic
+	action     func(State) map[Action]struct{}     // stocahstic
 	transition func(State, Action) (State, Reward) // stochastic
 }
