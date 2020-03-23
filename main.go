@@ -5,7 +5,7 @@ import (
 	"model"
 )
 
-var rewardArr = [10]float64{0, 0, 0, -1, -3, -2, 1, 3, 5, 0}
+var rewardArr = [10]float64{3, 3, 3, 2, 0, 1, 4, 7, 8, 3}
 
 var actionArr = [3]int{-1, 0, +1}
 
