@@ -23,7 +23,7 @@ func softmax(mapIn map[Action]Quality) (mapOut map[Action]Probability) {
 }
 
 func maxChoose(mapIn map[Action]Quality) (maxAction Action, maxValue Quality) {
-	maxValue = -math.MaxFloat64
+	maxValue = 0.0
 	for action, value := range mapIn {
 		if value > maxValue {
 			maxValue = value
