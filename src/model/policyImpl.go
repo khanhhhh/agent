@@ -10,10 +10,13 @@ func NewPolicy() Policy {
 // Iterate :
 func (policy Policy) Iterate(model Model, currentState State, discount float64) Policy {
 	if _, exist := policy.mapping[currentState]; exist == false {
-		// state not exist -> initialize
+		// update new state
 		policy.mapping[currentState] = make(map[Action]float64)
-		allActions := model.action(currentState)
-		for action := range allActions {
+	}
+	allActions := model.action(currentState)
+	for action := range allActions {
+		// update new action
+		if _, exist := policy.mapping[currentState][action]; exist == false {
 			policy.mapping[currentState][action] = 1.0
 		}
 	}
