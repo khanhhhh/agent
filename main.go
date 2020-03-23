@@ -37,7 +37,7 @@ func main() {
 	p := model.NewPolicy()
 	var state model.State = 0
 	for i := 0; i < 100000; i++ {
-		fmt.Printf("iter: %v, state: %v, update: ", i, state)
+		fmt.Printf("iter: %v, state: %v\n", i, state)
 		p = p.Iterate(m, state, 0.99999)
 		state = model.State((int(state) + 1) % len(rewardArr))
 	}

@@ -1,7 +1,5 @@
 package model
 
-import "fmt"
-
 // NewPolicy :
 func NewPolicy() Policy {
 	return Policy{
@@ -26,8 +24,6 @@ func (policy Policy) Iterate(model Model, currentState State, discount float64) 
 	nextState, reward := model.transition(currentState, action)
 	// update policy
 	_, utility := maxChoose(policy.mapping[nextState])
-	update := policy.mapping[currentState][action] - (reward + discount*utility)
-	fmt.Println(update)
 	policy.mapping[currentState][action] = reward + discount*utility
 
 	// return
