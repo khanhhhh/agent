@@ -7,29 +7,16 @@ func NewPolicy() Policy {
 	}
 }
 
-func match(subAction map[Action]struct{}, allAction map[Action]Quality) map[Action]Quality {
-	out := make(map[Action]Quality)
-	for action := range subAction {
-		out[action] = allAction[action]
-	}
-	return out
-}
-
 // Iterate :
-func (policy Policy) Iterate(model func(State, Action) (State, Reward), currentState State, chosenActions map[Action]struct{}, discount float64) (nextPolicy Policy, nextState State) {
+func (policy Policy) Iterate(model func(State, Action) (State, Reward), currentState State, action Action, discount float64) (nextPolicy Policy, nextState State) {
 	if _, exist := policy.mapping[currentState]; exist == false {
 		// update new state
 		policy.mapping[currentState] = make(map[Action]float64)
 	}
-	for action := range chosenActions {
+	if _, exist := policy.mapping[currentState][action]; exist == false {
 		// update new action
-		if _, exist := policy.mapping[currentState][action]; exist == false {
-			policy.mapping[currentState][action] = 0.0
-		}
+		policy.mapping[currentState][action] = 0.0
 	}
-	// random choose action
-	actionProb := softmax(match(chosenActions, policy.mapping[currentState]))
-	action, _ := randomChoose(actionProb)
 	// transition
 	nextState, reward := model(currentState, action)
 	// update policy
