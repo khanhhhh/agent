@@ -26,18 +26,18 @@ var transition = func(current model.State, action model.Action) (model.State, mo
 func main() {
 	fmt.Println("Hello, World!")
 
-	p := model.NewPolicy()
+	policy := model.NewPolicy()
 	var currentState model.State = 0
 	for i := 0; i < 1000; i++ {
 		action := model.Action(rand.Intn(3) - 1)
-		p, currentState = p.Iterate(transition, currentState, action, 0.99)
+		policy, currentState = model.Iterate(policy, transition, currentState, action, 0.99)
 	}
 
 	// Optimal Policy
 	var state model.State = 0
 	fmt.Println("Initial State:", state)
 	for i := 0; i < 10; i++ {
-		action := p.OptimalAction(state)
+		action := model.OptimalAction(policy, state)
 		state, _ = transition(state, action)
 		fmt.Println("Next State:", state)
 	}

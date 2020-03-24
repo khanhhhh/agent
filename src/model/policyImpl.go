@@ -1,34 +1,34 @@
 package model
 
+type discretePolicy struct {
+	mapping map[State]map[Action]Quality
+}
+
 // NewPolicy :
 func NewPolicy() Policy {
-	return Policy{
+	return discretePolicy{
 		mapping: make(map[State]map[Action]Quality),
 	}
 }
 
-// Iterate :
-func (policy Policy) Iterate(model func(State, Action) (State, Reward), currentState State, action Action, discount float64) (nextPolicy Policy, nextState State) {
-	if _, exist := policy.mapping[currentState]; exist == false {
+// Action :
+func (policy discretePolicy) Action(state State) map[Action]Quality {
+	if _, exist := policy.mapping[state]; exist == false {
 		// update new state
-		policy.mapping[currentState] = make(map[Action]float64)
+		policy.mapping[state] = make(map[Action]float64)
 	}
-	if _, exist := policy.mapping[currentState][action]; exist == false {
-		// update new action
-		policy.mapping[currentState][action] = 0.0
-	}
-	// transition
-	nextState, reward := model(currentState, action)
-	// update policy
-	_, utility := maxChoose(policy.mapping[nextState])
-	policy.mapping[currentState][action] = reward + discount*utility
-
-	// return
-	return policy, nextState
+	return policy.mapping[state]
 }
 
-// OptimalAction :
-func (policy Policy) OptimalAction(currentState State) Action {
-	action, _ := maxChoose(policy.mapping[currentState])
-	return action
+// Update :
+func (policy discretePolicy) Update(state State, action Action, quality Quality) {
+	if _, exist := policy.mapping[state]; exist == false {
+		// update new state
+		policy.mapping[state] = make(map[Action]float64)
+	}
+	if _, exist := policy.mapping[state][action]; exist == false {
+		// update new action
+		policy.mapping[state][action] = 0.0
+	}
+	policy.mapping[state][action] = quality
 }
