@@ -1,2 +1,4 @@
 #!/usr/bin/env sh
-GOPATH=$(pwd) godoc -http localhost:3000
+echo "Starting godoc server..."
+echo "http://localhost:6060/"
+GOPATH=$(pwd) godoc -http localhost:6060

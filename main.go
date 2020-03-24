@@ -30,7 +30,9 @@ func main() {
 	var currentState model.State = 0
 	for i := 0; i < 1000; i++ {
 		action := model.Action(rand.Intn(3) - 1)
-		policy, currentState = model.Iterate(policy, transition, currentState, action, 0.99)
+		nextState, reward := transition(currentState, action)
+		policy = model.Iterate(policy, currentState, action, nextState, reward, 0.99)
+		currentState = nextState
 	}
 
 	// Optimal Policy
