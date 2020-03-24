@@ -4,8 +4,8 @@ type discretePolicy struct {
 	mapping map[State]map[Action]Quality
 }
 
-// NewPolicy :
-func NewPolicy() Policy {
+// NewDiscretePolicy :
+func NewDiscretePolicy() Policy {
 	return discretePolicy{
 		mapping: make(map[State]map[Action]Quality),
 	}

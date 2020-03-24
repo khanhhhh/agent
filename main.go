@@ -26,7 +26,7 @@ var transition = func(current model.State, action model.Action) (model.State, mo
 func main() {
 	fmt.Println("Hello, World!")
 
-	policy := model.NewPolicy()
+	policy := model.NewDiscretePolicy()
 	var currentState model.State = 0
 	for i := 0; i < 1000; i++ {
 		action := model.Action(rand.Intn(3) - 1)
