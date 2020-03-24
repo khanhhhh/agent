@@ -14,11 +14,9 @@ var transition = func(current model.State, action model.Action) (model.State, mo
 	next := model.State(int(current) + int(action))
 	if int(next) < 0 {
 		next = 0
-		return next, 0
 	}
 	if int(next) >= len(valueArr) {
 		next = model.State(len(valueArr) - 1)
-		return next, 0
 	}
 	return next, valueArr[next] - valueArr[current]
 }
