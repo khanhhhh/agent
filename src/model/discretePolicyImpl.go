@@ -30,5 +30,5 @@ func (policy discretePolicy) Update(state State, action Action, quality Quality)
 		// update new action
 		policy.mapping[state][action] = 0.0
 	}
-	policy.mapping[state][action] = quality
+	policy.mapping[state][action] = 0.9 * policy.mapping[state][action] + 0.1 * quality
 }
